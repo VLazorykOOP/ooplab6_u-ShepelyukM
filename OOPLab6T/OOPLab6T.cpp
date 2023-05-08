@@ -67,3 +67,83 @@ int main() {
 
     return 0;
 }
+//-----------------------------------------------------------------
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Entity {
+protected:
+    string name;
+public:
+    Entity(const string& name) : name(name) {}
+    virtual ~Entity() {}
+
+    virtual void print() const {
+        cout << "Name: " << name << endl;
+    }
+};
+
+class Person : public Entity {
+protected:
+    int age;
+public:
+    Person(const string& name, int age) : Entity(name), age(age) {}
+
+    virtual void print() const override {
+        cout << "Name: " << name << ", Age: " << age << endl;
+    }
+};
+
+class Mother : public Person {
+public:
+    Mother(const string& name, int age) : Person(name, age) {}
+    virtual void print() const override {
+        cout << "Mother - ";
+        Person::print();
+    }
+};
+
+class Father : public Person {
+public:
+    Father(const string& name, int age) : Person(name, age) {}
+    virtual void print() const override {
+        cout << "Father - ";
+        Person::print();
+    }
+};
+
+class Daughter : public Person {
+public:
+    Daughter(const string& name, int age) : Person(name, age) {}
+    virtual void print() const override {
+        cout << "Daughter - ";
+        Person::print();
+    }
+};
+
+int main() {
+    Entity* entity = new Entity("John Smith");
+    entity->print();
+
+    Person* person = new Person("Jane Smith", 30);
+    person->print();
+
+    Mother* mother = new Mother("Mary Smith", 50);
+    mother->print();
+
+    Father* father = new Father("Bob Smith", 55);
+    father->print();
+
+    Daughter* daughter = new Daughter("Alice Smith", 20);
+    daughter->print();
+
+    delete entity;
+    delete person;
+    delete mother;
+    delete father;
+    delete daughter;
+
+    return 0;
+}
